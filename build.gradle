@@ -1,0 +1,13 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.glassfish.jersey.containers:jersey-container-jdk-http:2.22.2'
+}
+
+sourceCompatibility = '1.8'
+mainClassName = 'ch.zhaw.robopatrol.Main'
