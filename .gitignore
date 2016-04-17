@@ -7,3 +7,6 @@ gradle-app.setting
 
 # Intellij
 .idea
+data/00000000000.xd
+*.lck
+*.xd

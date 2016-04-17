@@ -1,7 +1,7 @@
 package ch.zhaw.robopatrol;
 
-import ch.zhaw.robopatrol.res.Config;
-import ch.zhaw.robopatrol.res.TestResource;
+import ch.zhaw.robopatrol.res.ConfigWriter;
+import ch.zhaw.robopatrol.res.ConfigReader;
 import org.glassfish.jersey.server.ResourceConfig;
 
 /**
@@ -12,7 +12,7 @@ public class RobopatrolServer extends ResourceConfig {
 
     public RobopatrolServer() {
         packages("ch.zhaw.robopatrol.res");
-        registerClasses(Config.class, TestResource.class);
+        registerClasses(ConfigWriter.class, ConfigReader.class);
     }
 
 }

@@ -1,12 +1,9 @@
 package ch.zhaw.robopatrol;
 
+import ch.zhaw.robopatrol.res.XodusDAO;
 import com.sun.net.httpserver.HttpServer;
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
-
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.net.URI;
@@ -20,6 +17,12 @@ public class Main {
         ResourceConfig config = new RobopatrolServer();
         HttpServer server = JdkHttpServerFactory.createHttpServer(baseUri, config);
         System.out.println("robopatrol-server: Running on port " + PORT + ".");
+
+        XodusDAO db = new XodusDAO("TestDB");
+        //test actions. TODO: remove
+        db.putToDatabase("someKey","someValue");
+        System.out.println(db.getByKey("someKey"));
+
 //        while (System.in.read() != 'q') {
 //            System.out.println("Press \"q\" to stop the server.");
 //        }
