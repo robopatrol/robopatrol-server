@@ -1,4 +1,4 @@
-package ch.zhaw.robopatrol.res;
+package ch.zhaw.robopatrol;
 
 import jetbrains.exodus.ByteIterable;
 import jetbrains.exodus.env.*;
@@ -83,14 +83,15 @@ public class XodusDAO {
      * @param key
      * Delete key/value Pair by Key without success / fail message
      */
-    public void deleteByKey(ByteIterable key) {
+    public void deleteByKey(String key) {
+        ByteIterable byteKey = stringToEntry(key);
         environment = Environments.newInstance(instanceName);
         openDBStore();
 
         environment.executeInTransaction(new TransactionalExecutable() {
             @Override
             public void execute(@NotNull final Transaction txn) {
-                store.delete(txn, key);
+                store.delete(txn, byteKey);
             }
         });
         environment.close();
