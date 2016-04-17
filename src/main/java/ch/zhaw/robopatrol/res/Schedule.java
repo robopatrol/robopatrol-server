@@ -8,7 +8,7 @@ import javax.ws.rs.core.Response;
 /**
  * Created by Schoggi on 17.04.2016.
  */
-@Path("shedule")
+@Path("schedule")
 public class Schedule {
     private XodusDAO db = new XodusDAO("Shedule");
 
@@ -18,8 +18,8 @@ public class Schedule {
     public Response getMessage(String jsonString) {
         JSONObject config = new JSONObject(jsonString);
         JSONObject schedulerConfig = config.getJSONObject("scheduler_config");
+        db.putToDatabase("jobName", schedulerConfig.getString("jobname"));
         db.putToDatabase("interval_sec", schedulerConfig.getString("interval_sec"));
-        db.putToDatabase("functionCall", schedulerConfig.getString("functionCall"));
         return Response.ok(config, MediaType.APPLICATION_JSON).build();
     }
 
@@ -38,10 +38,10 @@ public class Schedule {
     }
 
     JSONObject getJsonFromDB(){
-        JSONObject data = new JSONObject();
-        data.put("interval_sec", db.getByKey("interval_sec"));
-        data.put("functionCall", db.getByKey("functionCall"));
-        return data;
+        JSONObject name = new JSONObject();
+        name.put("interval_sec", db.getByKey("interval_sec"));
+        name.put("jobname", db.getByKey("jobName"));
+        return name;
     }
 
 }
