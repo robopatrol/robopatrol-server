@@ -25,15 +25,13 @@ public class Config {
     public String getMessage() {
         JSONArray array;
         JSONObject task = new JSONObject();
-        return task.put("Task", sampleData()).toString();
+        return task.put("sheduler", sampleData()).toString();
     }
 
     JSONObject sampleData(){
         JSONObject sampleData = new JSONObject();
-        sampleData.put("StartDate", "01.01.2001");
-        sampleData.put("StartTime", "10:30");
-        sampleData.put("Mode","random");
-        sampleData.put("repeat", "yes");
+        sampleData.put("intervalInSec", 3600);
+        sampleData.put("functionCall", "foo(bar)");
         return sampleData;
     }
 }
