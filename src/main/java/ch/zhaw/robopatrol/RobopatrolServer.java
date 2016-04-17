@@ -1,7 +1,6 @@
 package ch.zhaw.robopatrol;
 
-import ch.zhaw.robopatrol.res.ConfigWriter;
-import ch.zhaw.robopatrol.res.ConfigReader;
+import ch.zhaw.robopatrol.res.Schedule;
 import org.glassfish.jersey.server.ResourceConfig;
 
 /**
@@ -12,7 +11,7 @@ public class RobopatrolServer extends ResourceConfig {
 
     public RobopatrolServer() {
         packages("ch.zhaw.robopatrol.res");
-        registerClasses(ConfigWriter.class, ConfigReader.class);
+        registerClasses(Schedule.class);
     }
 
 }

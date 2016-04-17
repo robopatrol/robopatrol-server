@@ -1,6 +1,6 @@
 package ch.zhaw.robopatrol;
 
-import ch.zhaw.robopatrol.res.XodusDAO;
+import ch.zhaw.robopatrol.XodusDAO;
 import com.sun.net.httpserver.HttpServer;
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
