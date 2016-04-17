@@ -2,11 +2,17 @@ apply plugin: 'java'
 apply plugin: 'application'
 
 repositories {
-    mavenCentral()
+    mavenCentral()  // for release artifacts
+    maven {         // for snapshot artifacts
+        url 'https://oss.sonatype.org/content/groups/public'
+    }
 }
 
 dependencies {
     compile 'org.glassfish.jersey.containers:jersey-container-jdk-http:2.22.2'
+    compile 'javax.json:javax.json-api:1.0'
+    compile 'org.json:json:20160212'
+    compile 'org.jetbrains.xodus:xodus-environment:1.0-SNAPSHOT'
 }
 
 sourceCompatibility = '1.8'
