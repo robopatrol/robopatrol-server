@@ -12,7 +12,6 @@ import static jetbrains.exodus.env.StoreConfig.WITHOUT_DUPLICATES;
  * Ignore 'Failed to load class "org.slf4j.impl.StaticLoggerBinder' fault by gradle!
  */
 
-
 public class XodusDAO {
     public XodusDAO(String name){
         instanceName = name;

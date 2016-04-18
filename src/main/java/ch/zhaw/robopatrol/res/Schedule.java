@@ -18,26 +18,36 @@ public class Schedule {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response getMessage(String jsonString) {
+        System.out.println(jsonString);
         JSONObject config = new JSONObject(jsonString);
-        JSONObject schedulerConfig = config.getJSONObject("scheduler_config");
-        db.putToDatabase("jobName", schedulerConfig.getString("jobname"));
-        db.putToDatabase("attributes", schedulerConfig.getString("attributes"));
+        System.out.println(config.getString("jobname"));
+        System.out.println(config.getJSONObject("attributes").toString());
+        db.putToDatabase(config.getString("jobname"), config.getJSONObject("attributes").toString());
+
         return Response.ok(config, MediaType.APPLICATION_JSON).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getMessage() {
-        JSONObject task = new JSONObject();
-        return task.put("jobname", getJsonFromDB()).toString();
+        String result;
+        JSONObject task = getJsonFromDB();
+        result = task.toString();
+        System.out.println(result);
+        return result;
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("{key}")
-    public String getMessageByKey(@PathParam("key") String key) {
+    public Response getMessageByKey(@PathParam("key") String key) {
+        String result;
         JSONObject task = new JSONObject();
-        return task.put("jobname", db.getByKey(key)).toString();
+        task.put("attributes", db.getByKey(key));
+        task.put("jobname", key);
+        result = task.toString();
+        System.out.println(result);
+        return Response.status(200).entity(result).build();
     }
 
     @DELETE
@@ -49,8 +59,7 @@ public class Schedule {
 
     JSONObject getJsonFromDB(){
         JSONObject name = new JSONObject();
-        name.put("attributes", db.getByKey("attributes"));
-        name.put("jobname", db.getByKey("jobName"));
+        name.put("jobname", db.getByKey("somename"));
         return name;
     }
 
