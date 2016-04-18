@@ -61,6 +61,7 @@ public class XodusDAO {
      *
      * @param key as String
      * @return value to key as String
+     * @trhows NullpointerException if nothing is found in DB
      * Read value by key "myKey"
      */
     public String getByKey(String key) {

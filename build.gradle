@@ -13,6 +13,8 @@ dependencies {
     compile 'javax.json:javax.json-api:1.0'
     compile 'org.json:json:20160212'
     compile 'org.jetbrains.xodus:xodus-environment:1.0-SNAPSHOT'
+    testCompile 'junit:junit:4.12'
+
 }
 
 sourceCompatibility = '1.8'
