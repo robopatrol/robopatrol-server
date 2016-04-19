@@ -1,5 +1,7 @@
 # robopatrol-server
 
+[![Build Status](https://travis-ci.org/robopatrol/robopatrol-server.svg?branch=master)](https://travis-ci.org/robopatrol/robopatrol-server)
+
 ## Run the application for testing/development
 
 `gradle run`
