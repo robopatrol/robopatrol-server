@@ -10,20 +10,31 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.net.URI;
+import java.util.Optional;
+
+import static org.glassfish.jersey.server.model.Parameter.Source.URI;
 
 public class Main {
 
     private static final int PORT = 9998;
 
+    private static Optional<HttpServer> server = Optional.empty();
+
     public static void main(String[] args) throws IOException {
-        URI baseUri = UriBuilder.fromUri("http://localhost/").port(PORT).build();
+        start(PORT);
+    }
+
+    public static void start(int port) {
+        URI baseUri = UriBuilder.fromUri("http://localhost/").port(port).build();
         ResourceConfig config = new RobopatrolServer();
-        HttpServer server = JdkHttpServerFactory.createHttpServer(baseUri, config);
-        System.out.println("robopatrol-server: Running on port " + PORT + ".");
-//        while (System.in.read() != 'q') {
-//            System.out.println("Press \"q\" to stop the server.");
-//        }
-//        server.stop(0);
+        server = Optional.of(JdkHttpServerFactory.createHttpServer(baseUri, config));
+        System.out.println("robopatrol-server: Running on port " + port + ".");
+    }
+
+    public static void stop() {
+        server.ifPresent(server -> {
+            server.stop(3);
+        });
     }
 
 }
