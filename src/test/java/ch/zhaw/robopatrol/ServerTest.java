@@ -33,7 +33,7 @@ public class ServerTest {
             String line = response.useDelimiter("\\n").next();
             assertThat(line, is(DummyResource.CONTENT));
         }
-
+        Main.stop();
     }
 
     private static int findPort() throws IOException {
