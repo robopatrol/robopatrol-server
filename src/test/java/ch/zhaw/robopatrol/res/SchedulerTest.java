@@ -1,4 +1,4 @@
-package ch.zhaw.robopatrol;
+package ch.zhaw.robopatrol.res;
 
 import ch.zhaw.robopatrol.res.*;
 import org.json.JSONObject;
@@ -8,12 +8,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import javax.ws.rs.core.*;
-import java.io.IOException;
 
 /**
  * Created by Schoggi on 18.04.2016.
  */
-public class RestTest {
+public class SchedulerTest {
     Scheduler scheduler;
     String key;
     String input;
@@ -41,11 +40,7 @@ public class RestTest {
     public void deleteTest(){
         scheduler.deleteMessage(key);
         Response response = scheduler.getMessageByKey(key);
-        assertEquals("Key should not be in DB anymore -> empty String is shown", response.getEntity(), "");
+        assertEquals("Key should not be in DB anymore, return empty String", "", response.getEntity());
         assertEquals("check Status Code. Should be 404 not found", 404, response.getStatus());
-    }
-    @Test
-    public void negativeDeleteTest(){
-
     }
 }
