@@ -31,11 +31,16 @@ public class Waypoint {
     @Path("{key}")
     public Response getMessageByKey(@PathParam("key") String key) {
         String result;
-        JSONObject task = new JSONObject(db.getByKey(key));
-        JSONObject schedule = new JSONObject();
-        schedule.put("waypoints", task);
-        schedule.put("name", key);
-        result = schedule.toString();
+        JSONObject waypoint;
+        try {
+            waypoint = new JSONObject(db.getByKey(key));
+        } catch (NullPointerException e){
+            return Response.status(404).entity("").build();
+        }
+        JSONObject waypoints = new JSONObject();
+        waypoints.put("waypoints", waypoint);
+        waypoints.put("name", key);
+        result = waypoints.toString();
         System.out.println(result);
         return Response.status(200).entity(result).build();
     }

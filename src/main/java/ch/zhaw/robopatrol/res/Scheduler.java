@@ -2,7 +2,6 @@ package ch.zhaw.robopatrol.res;
 import ch.zhaw.robopatrol.*;
 import org.json.JSONObject;
 
-import javax.validation.constraints.Null;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -47,11 +46,7 @@ public class Scheduler {
     @DELETE
     @Path("{key}")
     public Response deleteMessage(@PathParam("key") String key){
-        try {
             db.deleteByKey(key);
-        } catch (NullPointerException e){
-            return Response.status(404).entity("").build();
-        }
         return Response.ok(key).build();
     }
 }
