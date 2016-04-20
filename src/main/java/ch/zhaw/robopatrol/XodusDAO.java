@@ -45,6 +45,8 @@ public class XodusDAO {
         ByteIterable byteKey, byteValue;
         byteKey = stringToEntry(key);
         byteValue = stringToEntry(value);
+        System.out.println("toString: " + byteValue.toString());
+        System.out.println("entryToString: " + entryToString(byteValue));
 
         environment.executeInTransaction(new TransactionalExecutable() {
             @Override
@@ -73,7 +75,6 @@ public class XodusDAO {
                 return store.get(txn, byteKey);
             }
         });
-
         environment.close();
         return entryToString(entry);
     }
