@@ -36,8 +36,8 @@ public class RobopatrolStore<T extends Entity> {
         return persistentMap.values();
     }
 
-    public void put(String id, T entity) {
-        persistentMap.put(id, entity);
+    public void put(T entity) {
+        persistentMap.put(entity.getId(), entity);
     }
 
     public T get(String id) {

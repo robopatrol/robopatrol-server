@@ -5,13 +5,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.ws.rs.core.Response;
-import java.util.Arrays;
 import java.util.Collection;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.core.IsNot.not;
 
 public class ScheduleTest {
 
@@ -45,6 +45,20 @@ public class ScheduleTest {
         Response response = schedule.getTask(task.getId());
         assertThat(response.getStatus(), is(200));
         assertThat(response.getEntity(), is(task));
+    }
+
+    @Test
+    public void testUpdate() {
+        Task task = (Task) schedule.addTask(task()).getEntity();
+
+        // Update entity locally.
+        task.setDescription("Updated description.");
+        assertThat((Task) schedule.getTask(task.getId()).getEntity(), is(not(task)));
+
+        // Send update request. Entity should then be updated.
+        Response response = schedule.updateTask(task.getId(), task);
+        assertThat(response.getStatus(), is(200));
+        assertThat((Task) schedule.getTask(task.getId()).getEntity(), is(task));
     }
 
     @Test
@@ -86,8 +100,8 @@ public class ScheduleTest {
 
     private Task task() {
         Cron cron = new Cron();
-        cron.setMinutes(Arrays.asList(0, 30));
-        cron.setHours(Arrays.asList(9, 19));
+        cron.setMinutes(new Integer[] { 0, 30 });
+        cron.setHours(new Integer[] { 9, 19 });
 
         Task task = new Task();
         task.setName("Test Task");

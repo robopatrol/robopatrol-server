@@ -12,7 +12,7 @@ import java.util.Objects;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 
 public class RobopatrolStoreTest {
 
@@ -25,10 +25,31 @@ public class RobopatrolStoreTest {
     }
 
     @Test
-    public void testEntity() {
+    public void testPut() {
         TestEntity entity = new TestEntity("42", 42);
-        store.put("key", entity);
-        assertThat(store.get("key"), is(entity));
+        store.put(entity);
+        assertThat(store.get("42"), is(entity));
+    }
+
+    @Test
+    public void testGetAll() {
+        TestEntity entity = new TestEntity("42", 42);
+        store.put(entity);
+        TestEntity entity2 = new TestEntity("1337", 1337);
+        store.put(entity2);
+
+        assertThat(store.getAll(), hasSize(2));
+        assertThat(store.getAll(), containsInAnyOrder(entity, entity2));
+    }
+
+    @Test
+    public void testRemoveEntity() {
+        TestEntity entity = new TestEntity("42", 42);
+        store.put(entity);
+        store.remove(entity.getId());
+
+        assertThat(store.getAll(), hasSize(0));
+        assertThat(store.get(entity.getId()), is(nullValue()));
     }
 
     /** Entities must be {@link Serializable} and must implement {@link Object#equals(Object)}. */
@@ -52,6 +73,7 @@ public class RobopatrolStoreTest {
             this.id = id;
         }
 
+        /** Generated. */
         @Override
         public boolean equals(Object obj) {
             if (!obj.getClass().equals(getClass())) {
@@ -62,6 +84,7 @@ public class RobopatrolStoreTest {
                     Objects.equals(this.property, that.property));
         }
 
+        /** Generated. */
         @Override
         public int hashCode() {
             return Objects.hash(id, property);

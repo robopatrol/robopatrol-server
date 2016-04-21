@@ -39,7 +39,7 @@ public class Schedule {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addTask(Task task) {
         task.generateId();
-        store.put(task.getId(), task);
+        store.put(task);
         return Response.ok(task).build();
     }
 
@@ -54,6 +54,18 @@ public class Schedule {
         return Response.ok(task).build();
     }
 
+    @PUT
+    @Path("{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response updateTask(@PathParam("id") String id, Task updatedTask) {
+        Task task = store.get(id);
+        if (task == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        store.put(updatedTask);
+        return Response.ok().build();
+    }
+
     @DELETE
     @Path("{id}")
     public Response deleteTask(@PathParam("id") String id) {
@@ -63,6 +75,16 @@ public class Schedule {
 
 }
 
+/**
+ * Json example:
+ * <pre><code>
+ *  {
+ *      "name": "Hourly Patrol",
+ *      "description": "This should keep the cats at bay!",
+ *      "cron": { "minutes": [5] }
+ *  }
+ * </code></pre>
+ */
 final class Task implements Entity {
 
     private String id;
@@ -109,6 +131,7 @@ final class Task implements Entity {
         this.cron = cron;
     }
 
+    /** Generated. */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -120,11 +143,22 @@ final class Task implements Entity {
                 Objects.equals(cron, task.cron);
     }
 
+    /** Generated. */
     @Override
     public int hashCode() {
         return Objects.hash(id, name, description, cron);
     }
 
+    /** Generated. */
+    @Override
+    public String toString() {
+        return "Task{" +
+            "id='" + id + '\'' +
+            ", name='" + name + '\'' +
+            ", description='" + description + '\'' +
+            ", cron=" + cron +
+            '}';
+    }
 }
 
 /**
@@ -138,51 +172,62 @@ final class Task implements Entity {
 final class Cron implements Serializable {
 
     /** Monday = 0, Sunday = 6 */
-    Set<Integer> weekdays = Collections.emptySet();
+    Integer[] weekdays = new Integer[0];
 
     /** 0-23 */
-    Set<Integer> hours = Collections.emptySet();
+    Integer[] hours = new Integer[0];
 
     /** 0-59 */
-    Set<Integer> minutes = Collections.emptySet();
+    Integer[] minutes = new Integer[0];
 
-    public Set<Integer> getWeekdays() {
+    public Integer[] getWeekdays() {
         return weekdays;
     }
 
-    public void setWeekdays(Collection<Integer> weekdays) {
-        this.weekdays = new HashSet<>(weekdays);
+    public void setWeekdays(Integer[] weekdays) {
+        this.weekdays = weekdays;
     }
 
-    public Set<Integer> getHours() {
+    public Integer[] getHours() {
         return hours;
     }
 
-    public void setHours(Collection<Integer> hours) {
-        this.hours = new HashSet<>(hours);
+    public void setHours(Integer[] hours) {
+        this.hours = hours;
     }
 
-    public Set<Integer> getMinutes() {
+    public Integer[] getMinutes() {
         return minutes;
     }
 
-    public void setMinutes(Collection<Integer> minutes) {
-        this.minutes = new HashSet<>(minutes);
+    public void setMinutes(Integer[] minutes) {
+        this.minutes = minutes;
     }
 
+    /** Generated. */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cron cron = (Cron) o;
-        return Objects.equals(weekdays, cron.weekdays) &&
-                Objects.equals(hours, cron.hours) &&
-                Objects.equals(minutes, cron.minutes);
+        return Arrays.equals(weekdays, cron.weekdays) &&
+                Arrays.equals(hours, cron.hours) &&
+                Arrays.equals(minutes, cron.minutes);
     }
 
+    /** Generated. */
     @Override
     public int hashCode() {
         return Objects.hash(weekdays, hours, minutes);
     }
 
+    /** Generated. */
+    @Override
+    public String toString() {
+        return "Cron{" +
+            "weekdays=" + Arrays.toString(weekdays) +
+            ", hours=" + Arrays.toString(hours) +
+            ", minutes=" + Arrays.toString(minutes) +
+            '}';
+    }
 }
