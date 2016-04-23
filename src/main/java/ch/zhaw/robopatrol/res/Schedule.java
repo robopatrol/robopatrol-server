@@ -81,7 +81,7 @@ public class Schedule {
  *  {
  *      "name": "Hourly Patrol",
  *      "description": "This should keep the cats at bay!",
- *      "cron": { "minutes": [5] }
+ *      "cron": "0 12 * * *"
  *  }
  * </code></pre>
  */
@@ -93,7 +93,18 @@ final class Task implements Entity {
 
     private String description;
 
-    private Cron cron;
+    /** Standard cron-style string:
+     * <code><pre>
+     * ┌───────────── min (0 - 59)
+     * │ ┌────────────── hour (0 - 23)
+     * │ │ ┌─────────────── day of month (1 - 31)
+     * │ │ │ ┌──────────────── month (1 - 12)
+     * │ │ │ │ ┌───────────────── day of week (0 - 6) (0 to 6 are Sunday to Saturday, or use names; 7 is Sunday, the same as 0)
+     * │ │ │ │ │
+     * * * * * *
+     * </pre></code>
+     */
+    private String cron;
 
     public Task() { }
 
@@ -123,11 +134,11 @@ final class Task implements Entity {
         this.description = description;
     }
 
-    public Cron getCron() {
+    public String getCron() {
         return cron;
     }
 
-    public void setCron(Cron cron) {
+    public void setCron(String cron) {
         this.cron = cron;
     }
 
@@ -157,77 +168,6 @@ final class Task implements Entity {
             ", name='" + name + '\'' +
             ", description='" + description + '\'' +
             ", cron=" + cron +
-            '}';
-    }
-}
-
-/**
- * Simplified cron for task scheduling. JSON examples:
- * <ul>
- * <li>Every day at 12:10 <=> {@code { hour: [12], minute: [10] }}</li>
- * <li>Every hour on mondays <=> {@code { weekdays: [0], minute: [0] }}</li>
- * <li>Every day at 12:00 and at 18:00 <=> {@code { hour: [12, 18], minute: [0] }}</li>
- * </ul>
- */
-final class Cron implements Serializable {
-
-    /** Monday = 0, Sunday = 6 */
-    Integer[] weekdays = new Integer[0];
-
-    /** 0-23 */
-    Integer[] hours = new Integer[0];
-
-    /** 0-59 */
-    Integer[] minutes = new Integer[0];
-
-    public Integer[] getWeekdays() {
-        return weekdays;
-    }
-
-    public void setWeekdays(Integer[] weekdays) {
-        this.weekdays = weekdays;
-    }
-
-    public Integer[] getHours() {
-        return hours;
-    }
-
-    public void setHours(Integer[] hours) {
-        this.hours = hours;
-    }
-
-    public Integer[] getMinutes() {
-        return minutes;
-    }
-
-    public void setMinutes(Integer[] minutes) {
-        this.minutes = minutes;
-    }
-
-    /** Generated. */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Cron cron = (Cron) o;
-        return Arrays.equals(weekdays, cron.weekdays) &&
-                Arrays.equals(hours, cron.hours) &&
-                Arrays.equals(minutes, cron.minutes);
-    }
-
-    /** Generated. */
-    @Override
-    public int hashCode() {
-        return Objects.hash(weekdays, hours, minutes);
-    }
-
-    /** Generated. */
-    @Override
-    public String toString() {
-        return "Cron{" +
-            "weekdays=" + Arrays.toString(weekdays) +
-            ", hours=" + Arrays.toString(hours) +
-            ", minutes=" + Arrays.toString(minutes) +
             '}';
     }
 }

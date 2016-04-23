@@ -99,14 +99,10 @@ public class ScheduleTest {
     }
 
     private Task task() {
-        Cron cron = new Cron();
-        cron.setMinutes(new Integer[] { 0, 30 });
-        cron.setHours(new Integer[] { 9, 19 });
-
         Task task = new Task();
         task.setName("Test Task");
-        task.setCron(cron);
-        task.setDescription("Daily Patrol");
+        task.setCron("0 18 * * 1-5");
+        task.setDescription("Workday Patrols");
 
         return task;
     }
