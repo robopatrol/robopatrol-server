@@ -18,7 +18,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class ServerTest {
 
-    @Test(timeout = 10000)
+    @Test(timeout = 30000)
     public void test() throws IOException {
         int port = findPort();
         Main.start(port);
