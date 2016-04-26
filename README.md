@@ -7,11 +7,21 @@
 `gradle run`
 `gradle run --debug`
 
-## Build an artifact for deployment
-
-1. `gradle build`
-2. `build/distributions/robopatrol-server.zip`
+Server should run on:  http://localhost:9998/
 
 ## IDE
 
 I recommend Intellij. Choose "Import from Gradle" and everything should work just fine.
+
+## Docker
+
+If you haven't already, install Docker: https://docs.docker.com/engine/installation/
+
+Build and Run:
+
+```shell
+docker-compose build
+docker-compose up
+```
+
+The server runs on port 9998. Use `docker-machine ip` to get the IP address.
