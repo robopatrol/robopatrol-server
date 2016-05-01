@@ -27,7 +27,7 @@ public class RobopatrolStore<T extends Entity> {
         this(storeId, DBMaker.fileDB(storeId + ".mapdb").closeOnJvmShutdown().make());
     }
 
-    RobopatrolStore(String storeId, DB db) {
+    private RobopatrolStore(String storeId, DB db) {
         this.db = db;
         persistentMap = (Map<String, T>) db.hashMap(storeId).createOrOpen();
     }
