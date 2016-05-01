@@ -15,6 +15,7 @@ public class RobopatrolServer extends ResourceConfig {
 
         packages("ch.zhaw.robopatrol.res");
         register(ExceptionListener.class);
+        register(CORSFilter.class);
     }
 
     /** Log exceptions. */
