@@ -31,3 +31,7 @@ jacocoTestReport {
         html.enabled = true
     }
 }
+
+// Static Code Analysis
+
+apply plugin: 'findbugs'

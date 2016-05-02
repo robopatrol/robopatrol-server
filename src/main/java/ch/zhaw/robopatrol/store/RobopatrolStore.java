@@ -22,7 +22,9 @@ public class RobopatrolStore<T extends Entity> implements AutoCloseable {
 
     public static <T extends Entity> RobopatrolStore<T> forClass(Class<?> id) {
         File baseDir = new File(STORE_DIR);
-        baseDir.mkdirs();
+        if (!baseDir.isDirectory() && !baseDir.mkdirs()) {
+            throw new IllegalStateException("Can't create database directory: " + baseDir);
+        }
 
         String storeId = id.getName();
         File dbFile = new File(baseDir, storeId + "." + FILE_EXTENTION);
@@ -38,6 +40,7 @@ public class RobopatrolStore<T extends Entity> implements AutoCloseable {
 
     private RobopatrolStore(DB db, String storeId) {
         this.db = db;
+
         persistentMap = (Map<String, T>) db.hashMap(storeId).createOrOpen();
     }
 
