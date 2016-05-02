@@ -5,3 +5,5 @@ services:
     build: .
     ports:
       - "9998:9998"
+    volumes:
+      - ./store:/robopatrol-server/store
