@@ -4,5 +4,6 @@ FROM java:8
 # Run `gradle build` before running this Docker build! 
 ADD build/distributions/robopatrol-server.tar .
 WORKDIR robopatrol-server
+VOLUME /robopatrol-server/store
 CMD ./bin/robopatrol-server
 EXPOSE 9998

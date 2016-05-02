@@ -3,31 +3,40 @@ package ch.zhaw.robopatrol.store;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 
 
-public class RobopatrolStore<T extends Entity> {
+public class RobopatrolStore<T extends Entity> implements AutoCloseable {
+
+    private static final String STORE_DIR = "store";
+
+    private static final String FILE_EXTENTION = "mapdb";
 
     private final DB db;
 
     private final Map<String, T> persistentMap;
 
-    public static <T extends Entity> RobopatrolStore<T> forClass(Class<?> storeId) {
-        return new RobopatrolStore<T>(storeId.getName());
+    public static <T extends Entity> RobopatrolStore<T> forClass(Class<?> id) {
+        File baseDir = new File(STORE_DIR);
+        baseDir.mkdirs();
+
+        String storeId = id.getName();
+        File dbFile = new File(baseDir, storeId + "." + FILE_EXTENTION);
+        DB db = DBMaker.fileDB(dbFile).closeOnJvmShutdown().make();
+
+        return new RobopatrolStore<T>(db, storeId);
     }
 
     public static <T extends Entity> RobopatrolStore<T> inMemory() {
-        return new RobopatrolStore<T>(UUID.randomUUID().toString(), DBMaker.memoryDB().make());
+        DB db = DBMaker.memoryDB().make();
+        return new RobopatrolStore<T>(db, UUID.randomUUID().toString());
     }
 
-    private RobopatrolStore(String storeId) {
-        this(storeId, DBMaker.fileDB(storeId + ".mapdb").closeOnJvmShutdown().make());
-    }
-
-    private RobopatrolStore(String storeId, DB db) {
+    private RobopatrolStore(DB db, String storeId) {
         this.db = db;
         persistentMap = (Map<String, T>) db.hashMap(storeId).createOrOpen();
     }
@@ -48,6 +57,7 @@ public class RobopatrolStore<T extends Entity> {
         persistentMap.remove(id);
     }
 
+    @Override
     public void close() {
         db.close();
     }
