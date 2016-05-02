@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -25,7 +26,7 @@ public class ServerTest {
         waitForServer(port);
 
         URL testUrl = new URL("http://localhost:" + port + "/" + DummyResource.PATH);
-        try (Scanner response = new Scanner(testUrl.openStream())) {
+        try (Scanner response = new Scanner(testUrl.openStream(),StandardCharsets.UTF_8.name())) {
             String line = response.useDelimiter("\\n").next();
             assertThat(line, is(DummyResource.CONTENT));
         }

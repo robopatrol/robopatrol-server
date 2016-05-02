@@ -53,7 +53,7 @@ public class RobopatrolStoreTest {
     }
 
     /** Entities must be {@link Serializable} and must implement {@link Object#equals(Object)}. */
-    private static class TestEntity implements Entity {
+    private static final class TestEntity implements Entity {
 
         private String id;
         private Integer property;
@@ -73,18 +73,17 @@ public class RobopatrolStoreTest {
             this.id = id;
         }
 
-        /** Generated. */
+        /** Generated */
         @Override
-        public boolean equals(Object obj) {
-            if (!obj.getClass().equals(getClass())) {
-                return false;
-            }
-            TestEntity that = (TestEntity) obj;
-            return (Objects.equals(this.id, that.id) &&
-                    Objects.equals(this.property, that.property));
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            TestEntity that = (TestEntity) o;
+            return Objects.equals(id, that.id) &&
+                    Objects.equals(property, that.property);
         }
 
-        /** Generated. */
+        /** Generated */
         @Override
         public int hashCode() {
             return Objects.hash(id, property);
