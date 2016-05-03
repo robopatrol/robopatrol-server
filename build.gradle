@@ -13,7 +13,7 @@ dependencies {
     compile 'org.glassfish.jersey.media:jersey-media-moxy:2.22.2' // JSON for the REST server
     compile 'org.mapdb:mapdb:3.0.0-M5' // Persistant storage
 
-    testCompile 'junit:junit:4.+'
+    testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-all:1.+'
     testCompile 'org.mockito:mockito-all:1.+'
 }

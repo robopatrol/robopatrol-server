@@ -40,7 +40,6 @@ public class RobopatrolStore<T extends Entity> implements AutoCloseable {
 
     private RobopatrolStore(DB db, String storeId) {
         this.db = db;
-
         persistentMap = (Map<String, T>) db.hashMap(storeId).createOrOpen();
     }
 

@@ -1,4 +1,4 @@
-package ch.zhaw.robopatrol;
+package ch.zhaw.robopatrol.store;
 
 import ch.zhaw.robopatrol.store.Entity;
 import ch.zhaw.robopatrol.store.RobopatrolStore;
