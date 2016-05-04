@@ -5,6 +5,7 @@
 ## Run the application for testing/development
 
 `gradle run`
+
 `gradle run --debug`
 
 Server should run on:  http://localhost:9998/
@@ -13,15 +14,26 @@ Server should run on:  http://localhost:9998/
 
 I recommend Intellij. Choose "Import from Gradle" and everything should work just fine.
 
-## Docker
+## Release
 
-If you haven't already, install Docker: https://docs.docker.com/engine/installation/
+### Docker
 
-Build and Run:
+Releases are published as Docker containers: [Robopatrol on Docker Hub](https://hub.docker.com/u/robopatrol/)
+
+[Get Docker](https://docs.docker.com/engine/installation/), then build and run a Docker container:
 
 ```shell
 docker-compose build
 docker-compose up
 ```
 
-The server runs on port 9998. Use `docker-machine ip` to get the IP address.
+(The server runs on port 9998. Use `docker-machine ip` to get the IP address.)
+
+### Publish a Release
+
+Build and upload a container image:
+
+```shell
+docker build -t robopatrol/server .
+docker push robopatrol/server
+```
