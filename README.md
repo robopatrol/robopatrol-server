@@ -2,15 +2,17 @@
 
 [![Build Status](https://travis-ci.org/robopatrol/robopatrol-server.svg?branch=master)](https://travis-ci.org/robopatrol/robopatrol-server) [![codecov.io](https://codecov.io/github/robopatrol/robopatrol-server/coverage.svg?branch=master)](https://codecov.io/github/robopatrol/robopatrol-server?branch=master)
 
-## Run the application for testing/development
+## Develop
+
+### Run the Application
 
 `gradle run`
 
 `gradle run --debug`
 
-Server should run on:  http://localhost:9998/
+The REST server should run on:  http://localhost:9998/
 
-## IDE
+### IDE
 
 I recommend Intellij. Choose "Import from Gradle" and everything should work just fine.
 
