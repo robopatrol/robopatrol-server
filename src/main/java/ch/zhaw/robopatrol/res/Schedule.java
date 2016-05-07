@@ -2,7 +2,9 @@ package ch.zhaw.robopatrol.res;
 
 import ch.zhaw.robopatrol.store.Entity;
 import ch.zhaw.robopatrol.store.RobopatrolStore;
+import ch.zhaw.robopatrol.store.RobopatrolStoreProvider;
 
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
@@ -13,24 +15,22 @@ import java.util.*;
 @Path("schedule")
 public class Schedule {
 
-    // TODO: Consider setting up dependency injection via @Context for this.
-    private static final RobopatrolStore<Task> STORE = RobopatrolStore.forClass(Schedule.class);
+    private final RobopatrolStore<Task> STORE;
 
-    private final RobopatrolStore<Task> store;
-
-    public Schedule() {
-        store = STORE;
+    @Inject
+    public Schedule(RobopatrolStoreProvider storeProvider) {
+        this(storeProvider.get(Schedule.class));
     }
 
     Schedule(RobopatrolStore<Task> store) {
-        this.store = store;
+        STORE = store;
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
         // Sadly, GenericEnity is required for generic types, such as Collection<T>...
-        return Response.ok(new GenericEntity<Collection<Task>>(store.getAll()) {}).build();
+        return Response.ok(new GenericEntity<Collection<Task>>(STORE.getAll()) {}).build();
     }
 
     @POST
@@ -38,7 +38,7 @@ public class Schedule {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addTask(Task task) {
         task.generateId();
-        store.put(task);
+        STORE.put(task);
         return Response.ok(task).build();
     }
 
@@ -46,7 +46,7 @@ public class Schedule {
     @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getTask(@PathParam("id") String id) {
-        Task task = store.get(id);
+        Task task = STORE.get(id);
         if (task == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -57,18 +57,18 @@ public class Schedule {
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateTask(@PathParam("id") String id, Task updatedTask) {
-        Task task = store.get(id);
+        Task task = STORE.get(id);
         if (task == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        store.put(updatedTask);
+        STORE.put(updatedTask);
         return Response.ok().build();
     }
 
     @DELETE
     @Path("{id}")
     public Response deleteTask(@PathParam("id") String id) {
-        store.remove(id);
+        STORE.remove(id);
         return Response.ok().build();
     }
 

@@ -1,11 +1,20 @@
 package ch.zhaw.robopatrol;
 
+import ch.zhaw.robopatrol.store.Entity;
+import ch.zhaw.robopatrol.store.RobopatrolStore;
+import ch.zhaw.robopatrol.store.RobopatrolStoreProvider;
+import org.glassfish.hk2.api.Factory;
+import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.moxy.json.MoxyJsonConfig;
+import org.glassfish.jersey.process.internal.RequestScoped;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.monitoring.ApplicationEvent;
 import org.glassfish.jersey.server.monitoring.ApplicationEventListener;
 import org.glassfish.jersey.server.monitoring.RequestEvent;
 import org.glassfish.jersey.server.monitoring.RequestEventListener;
+
+import javax.inject.Singleton;
+import java.util.Map;
 
 
 public class RobopatrolServer extends ResourceConfig {
@@ -16,6 +25,13 @@ public class RobopatrolServer extends ResourceConfig {
         packages("ch.zhaw.robopatrol.res");
         register(ExceptionListener.class);
         register(CORSFilter.class);
+
+        register(new AbstractBinder() {
+            @Override
+            protected void configure() {
+                bind(new RobopatrolStoreProvider()).to(RobopatrolStoreProvider.class);
+            }
+        });
     }
 
     /** Log exceptions. */
@@ -37,3 +53,4 @@ public class RobopatrolServer extends ResourceConfig {
     }
 
 }
+
