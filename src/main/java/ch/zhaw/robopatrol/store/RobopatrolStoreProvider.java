@@ -12,15 +12,15 @@ public class RobopatrolStoreProvider implements AutoCloseable {
         return (RobopatrolStore<T>) sharedStores.computeIfAbsent(storeId, RobopatrolStore::forClass);
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        close();
-        super.finalize();
+    public RobopatrolStoreProvider() {
+        Runtime.getRuntime().addShutdownHook(new Thread(this::close));
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
+        System.out.println("Closing all RobopatrolStores...");
         sharedStores.values().forEach(RobopatrolStore::close);
         sharedStores.clear();
     }
+
 }
