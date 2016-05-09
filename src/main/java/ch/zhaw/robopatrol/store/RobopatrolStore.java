@@ -3,6 +3,7 @@ package ch.zhaw.robopatrol.store;
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.Serializable;
 import java.util.Collection;
@@ -10,35 +11,13 @@ import java.util.Map;
 import java.util.UUID;
 
 
-public class RobopatrolStore<T extends Entity> implements AutoCloseable {
-
-    private static final String STORE_DIR = "store";
-
-    private static final String FILE_EXTENTION = "mapdb";
+public class RobopatrolStore<T extends Entity> implements Closeable, AutoCloseable {
 
     private final DB db;
 
     private final Map<String, T> persistentMap;
 
-    public static <T extends Entity> RobopatrolStore<T> forClass(Class<?> id) {
-        File baseDir = new File(STORE_DIR);
-        if (!baseDir.isDirectory() && !baseDir.mkdirs()) {
-            throw new IllegalStateException("Can't create database directory: " + baseDir);
-        }
-
-        String storeId = id.getName();
-        File dbFile = new File(baseDir, storeId + "." + FILE_EXTENTION);
-        DB db = DBMaker.fileDB(dbFile).closeOnJvmShutdown().make();
-
-        return new RobopatrolStore<T>(db, storeId);
-    }
-
-    public static <T extends Entity> RobopatrolStore<T> inMemory() {
-        DB db = DBMaker.memoryDB().make();
-        return new RobopatrolStore<T>(db, UUID.randomUUID().toString());
-    }
-
-    private RobopatrolStore(DB db, String storeId) {
+    protected RobopatrolStore(DB db, String storeId) {
         this.db = db;
         persistentMap = (Map<String, T>) db.hashMap(storeId).createOrOpen();
     }
@@ -49,6 +28,7 @@ public class RobopatrolStore<T extends Entity> implements AutoCloseable {
 
     public void put(T entity) {
         persistentMap.put(entity.getId(), entity);
+        db.commit();
     }
 
     public T get(String id) {
@@ -57,6 +37,7 @@ public class RobopatrolStore<T extends Entity> implements AutoCloseable {
 
     public void remove(String id) {
         persistentMap.remove(id);
+        db.commit();
     }
 
     @Override

@@ -22,10 +22,12 @@ public class RobopatrolServer extends ResourceConfig {
     }
 
     private static class DependencyInjection extends AbstractBinder {
+
         @Override
         protected void configure() {
             bind(new RobopatrolStoreProvider()).to(RobopatrolStoreProvider.class);
         }
+
     }
 
     /** Log exceptions. */
@@ -42,6 +44,7 @@ public class RobopatrolServer extends ResourceConfig {
                 }
             };
         }
+
     }
 
 }
