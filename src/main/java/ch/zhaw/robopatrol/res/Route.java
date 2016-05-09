@@ -80,7 +80,9 @@ public class Route {
  *  {
  *      "name": "Point #1",
  *      "x": "234",
- *      "y": "25"
+ *      "y": "25",
+ *      "lastVisited": "2016-04-23T18:25:43.511Z"
+ *      "pythonMethodName": "my_task"
  *  }
  * </code></pre>
  */
@@ -93,6 +95,11 @@ final class Waypoint implements Entity {
     private int x;
 
     private int y;
+
+    /** Has to be an existing method in schedule.py */
+    private String pythonMethodName;
+
+    private Date lastVisited;
 
     public Waypoint() { }
 
@@ -128,6 +135,22 @@ final class Waypoint implements Entity {
         this.y = y;
     }
 
+    public void setPythonMethodName(String pythonMethodName){
+      this.pythonMethodName = pythonMethodName;
+    }
+
+    public String getPythonMethodName(){
+      return pythonMethodName;
+    }
+
+    public void setLastVisited(Date lastVisited){
+      this.lastVisited = lastVisited;
+    }
+
+    public Date getLastVisited(){
+      return lastVisited;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -138,6 +161,14 @@ final class Waypoint implements Entity {
         if (x != waypoint.x) return false;
         if (y != waypoint.y) return false;
         if (id != null ? !id.equals(waypoint.id) : waypoint.id != null) return false;
+        if (lastVisited != null ?
+        !lastVisited.equals(waypoint.lastVisited) :
+        waypoint.lastVisited != null)
+        return false;
+        if (pythonMethodName != null ?
+        !pythonMethodName.equals(waypoint.pythonMethodName) :
+        waypoint.pythonMethodName != null)
+        return false;
         return name != null ? name.equals(waypoint.name) : waypoint.name == null;
 
     }
@@ -146,6 +177,12 @@ final class Waypoint implements Entity {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (lastVisited != null ?
+         lastVisited.hashCode() :
+         0);
+        result = 31 * result + (pythonMethodName != null ?
+        pythonMethodName.hashCode() :
+         0);
         result = 31 * result + x;
         result = 31 * result + y;
         return result;
@@ -159,6 +196,8 @@ final class Waypoint implements Entity {
                 ", name='" + name + '\'' +
                 ", x=" + x +
                 ", y=" + y +
+                ", lastVisited='" + lastVisited + '\'' +
+                ", pythonMethodName='" + pythonMethodName + '\'' +
                 '}';
     }
 }
