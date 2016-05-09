@@ -128,7 +128,6 @@ final class Waypoint implements Entity {
         this.y = y;
     }
 
-    /** Generated. */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -141,6 +140,15 @@ final class Waypoint implements Entity {
         if (id != null ? !id.equals(waypoint.id) : waypoint.id != null) return false;
         return name != null ? name.equals(waypoint.name) : waypoint.name == null;
 
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + x;
+        result = 31 * result + y;
+        return result;
     }
 
     /** Generated. */
