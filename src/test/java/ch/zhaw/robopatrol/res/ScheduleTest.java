@@ -1,6 +1,7 @@
 package ch.zhaw.robopatrol.res;
 
 import ch.zhaw.robopatrol.store.RobopatrolStore;
+import ch.zhaw.robopatrol.store.RobopatrolStoreProvider;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,6 +13,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsNot.not;
+import static org.hamcrest.core.StringContains.containsString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.eq;
 
 public class ScheduleTest {
 
@@ -20,6 +25,13 @@ public class ScheduleTest {
     @Before
     public void createSchedule() {
         schedule = new Schedule(RobopatrolStore.inMemory());
+    }
+
+    @Test
+    public void testInject(){
+      RobopatrolStoreProvider provider = mock(RobopatrolStoreProvider.class);
+      new Schedule(provider);
+      verify(provider).get(eq(Schedule.class));
     }
 
     @Test
@@ -62,6 +74,15 @@ public class ScheduleTest {
     }
 
     @Test
+    public void testUpdateNoId() {
+        Task t = task();
+
+        Response response = schedule.updateTask("asdf", t);
+        assertThat(response.getStatus(), is(404));
+        assertThat(response.getStatusInfo(), is(Response.Status.NOT_FOUND));
+    }
+
+    @Test
     public void testGetAll() {
         schedule.addTask(task());
         schedule.addTask(task());
@@ -96,6 +117,104 @@ public class ScheduleTest {
         assertThat(response.getStatus(), is(200));
         Collection<Task> tasks = (Collection<Task>)response.getEntity();
         assertThat(tasks, hasSize(0));
+    }
+
+    @Test
+    public void testHash(){
+      Task t1 = task();
+      Task t2 = task();
+
+      assertThat(t1.hashCode(), is(t2.hashCode()));
+    }
+
+    @Test
+    public void testEquals(){
+      Task t1 = task();
+      Task t2 = task();
+
+      assertThat(t1.equals(t2), is(true));
+    }
+
+    @Test
+    public void testEquals2(){
+      Task t1 = task();
+
+      assertThat(t1.equals(null), is(false));
+    }
+
+    @Test
+    public void testEquals3(){
+      Task t1 = task();
+
+      assertThat(t1.equals(new Object()), is(false));
+    }
+
+    @Test
+    public void testEquals4(){
+      Task t1 = task();
+      t1.setId("asdf");
+      Task t2 = task();
+      t2.setId("asdf");
+
+      assertThat(t1.equals(t2), is(true));
+    }
+
+    @Test
+    public void testEquals5(){
+      Task t1 = task();
+
+      assertThat(t1.equals(t1), is(true));
+    }
+
+    @Test
+    public void testEquals6(){
+      Task t1 = task();
+      t1.setId("foo");
+      Task t2 = task();
+
+      assertThat(t1.equals(t2), is(false));
+    }
+
+    @Test
+    public void testEquals7(){
+      Task t1 = task();
+      t1.setCron("something");
+      Task t2 = task();
+
+      assertThat(t1.equals(t2), is(false));
+    }
+
+    @Test
+    public void testEquals8(){
+      Task t1 = task();
+      t1.setDescription("foo");
+      Task t2 = task();
+
+      assertThat(t1.equals(t2), is(false));
+    }
+
+    @Test
+    public void testEquals9(){
+      Task t1 = task();
+      t1.setName("foo");
+      Task t2 = task();
+
+      assertThat(t1.equals(t2), is(false));
+    }
+
+    @Test
+    public void testToString(){
+      Task t1 = task();
+
+      String result = t1.toString();
+      assertThat(result, containsString("Task"));
+      assertThat(result, containsString("id="));
+      assertThat(result, containsString("name="));
+      assertThat(result, containsString("description="));
+      assertThat(result, containsString("cron="));
+      assertThat(result, containsString(t1.getName()));
+      assertThat(result, containsString(t1.getDescription()));
+      assertThat(result, containsString(t1.getCron()));
     }
 
     private Task task() {

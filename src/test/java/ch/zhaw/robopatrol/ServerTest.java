@@ -19,27 +19,20 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class ServerTest {
 
-    @Test(timeout = 30000)
-    public void test() throws IOException {
-        int port = findPort();
-        Main.start(port);
-        waitForServer(port);
 
-        URL testUrl = new URL("http://localhost:" + port + "/" + DummyResource.PATH);
+    @Test(timeout = 30000)
+    public void testMain() throws IOException {
+        //int port = findPort();
+        Main.main(new String[0]);
+        //Main.start(port);
+        waitForServer(9998);
+
+        URL testUrl = new URL("http://localhost:" + 9998 + "/" + DummyResource.PATH);
         try (Scanner response = new Scanner(testUrl.openStream(),StandardCharsets.UTF_8.name())) {
             String line = response.useDelimiter("\\n").next();
             assertThat(line, is(DummyResource.CONTENT));
         }
         Main.stop();
-    }
-
-    private static int findPort() throws IOException {
-        int port;
-        try (ServerSocket socket = new ServerSocket(0)) {
-            port = socket.getLocalPort();
-            socket.close();
-            return port;
-        }
     }
 
     private static void waitForServer(int port) throws IOException {
