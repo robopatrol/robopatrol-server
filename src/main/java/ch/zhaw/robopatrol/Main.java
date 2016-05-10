@@ -15,10 +15,9 @@ public class Main {
     private static Optional<HttpServer> server = Optional.empty();
 
     private Main(int port) throws IOException {
-        URI baseUri = UriBuilder.fromUri("http://localhost/").port(port).build();
+        URI baseUri = UriBuilder.fromUri("http://0.0.0.0/").port(port).build();
         ResourceConfig config = new RobopatrolServer();
         HttpServer server = GrizzlyHttpServerFactory.createHttpServer(baseUri, config);
-        server.start();
 
         Main.server = Optional.of(server);
         System.out.println("robopatrol-server: Running on port " + port + ".");
