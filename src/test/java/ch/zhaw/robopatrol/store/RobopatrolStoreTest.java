@@ -21,7 +21,7 @@ public class RobopatrolStoreTest {
 
     @Before
     public void makeTestStore() {
-        store = RobopatrolStore.inMemory();
+        store = RobopatrolStoreProvider.inMemory();
     }
 
     @Test

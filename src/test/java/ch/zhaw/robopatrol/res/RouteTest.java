@@ -24,7 +24,7 @@ public class RouteTest {
 
     @Before
     public void createSchedule() {
-        route = new Route(RobopatrolStore.inMemory());
+        route = new Route(RobopatrolStoreProvider.inMemory());
     }
 
     @Test
