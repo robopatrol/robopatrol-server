@@ -200,24 +200,6 @@ public class RouteTest {
     }
 
     @Test
-    public void testEquals11(){
-      Waypoint p1 = point();
-      p1.setPythonMethodName("my_method");
-      Waypoint p2 =  point();
-      p2.setPythonMethodName("my_method");
-      assertThat(p1.equals(p2), is(true));
-    }
-
-    @Test
-    public void testEquals12(){
-      Waypoint p1 = point();
-      p1.setPythonMethodName("my_method");
-      Waypoint p2 =  point();
-      p2.setPythonMethodName(null);
-      assertThat(p1.equals(p2), is(false));
-    }
-
-    @Test
     public void testEquals13(){
       Waypoint p1 = point();
       p1.setLastVisited(new Date());
@@ -244,13 +226,6 @@ public class RouteTest {
       assertThat(p1.equals(p2), is(false));
     }
 
-    @Test
-    public void testEquals16(){
-      Waypoint p1 = point();
-      Waypoint p2 =  point();
-      p2.setPythonMethodName("my_test");
-      assertThat(p1.equals(p2), is(false));
-    }
 
     @Test
     public void testNotEquals(){
@@ -274,11 +249,9 @@ public class RouteTest {
       Waypoint p1 = point();
       p1.setId("test");
       p1.setLastVisited(date);
-      p1.setPythonMethodName("my_meth");
       Waypoint p2 =  point();
       p2.setId("test");
       p2.setLastVisited(date);
-      p2.setPythonMethodName("my_meth");
       assertThat(p1.hashCode(), is(p2.hashCode()));
     }
 
@@ -295,7 +268,6 @@ public class RouteTest {
     public void testToString(){
       Waypoint p1 = point();
       p1.setLastVisited(new Date());
-      p1.setPythonMethodName("my_method");
 
       String result = p1.toString();
       assertThat(result, containsString("Point"));
@@ -304,11 +276,9 @@ public class RouteTest {
       assertThat(result, containsString("y="));
       assertThat(result, containsString("name="));
       assertThat(result, containsString("lastVisited="));
-      assertThat(result, containsString("pythonMethodName="));
       assertThat(result, containsString(p1.getName()));
       assertThat(result, containsString(Integer.toString(p1.getX())));
       assertThat(result, containsString(Integer.toString(p1.getY())));
-      assertThat(result, containsString(p1.getPythonMethodName()));
       assertThat(result, containsString(p1.getLastVisited().toString()));
     }
 

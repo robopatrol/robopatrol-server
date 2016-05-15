@@ -105,6 +105,9 @@ final class Task implements Entity {
      */
     private String cron;
 
+    /** Has to be an existing method in schedule.py */
+    private String pythonMethodName = "do_Patrol";
+
     public Task() { }
 
     @Override
@@ -141,6 +144,14 @@ final class Task implements Entity {
         this.cron = cron;
     }
 
+    public void setPythonMethodName(String pythonMethodName){
+      this.pythonMethodName = pythonMethodName;
+    }
+
+    public String getPythonMethodName(){
+      return pythonMethodName;
+    }
+
     /** Generated. */
     @Override
     public boolean equals(Object o) {
@@ -150,13 +161,14 @@ final class Task implements Entity {
         return Objects.equals(id, task.id) &&
                 Objects.equals(name, task.name) &&
                 Objects.equals(description, task.description) &&
+                Objects.equals(pythonMethodName, task.pythonMethodName) &&
                 Objects.equals(cron, task.cron);
     }
 
     /** Generated. */
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, cron);
+        return Objects.hash(id, name, description,  pythonMethodName, cron);
     }
 
     /** Generated. */
@@ -166,6 +178,7 @@ final class Task implements Entity {
             "id='" + id + '\'' +
             ", name='" + name + '\'' +
             ", description='" + description + '\'' +
+            ", pythonMethodName='" + pythonMethodName + '\'' +
             ", cron=" + cron +
             '}';
     }

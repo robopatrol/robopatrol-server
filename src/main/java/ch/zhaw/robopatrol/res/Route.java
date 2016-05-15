@@ -96,9 +96,6 @@ final class Waypoint implements Entity {
 
     private int y;
 
-    /** Has to be an existing method in schedule.py */
-    private String pythonMethodName;
-
     private Date lastVisited;
 
     public Waypoint() { }
@@ -135,14 +132,6 @@ final class Waypoint implements Entity {
         this.y = y;
     }
 
-    public void setPythonMethodName(String pythonMethodName){
-      this.pythonMethodName = pythonMethodName;
-    }
-
-    public String getPythonMethodName(){
-      return pythonMethodName;
-    }
-
     public void setLastVisited(Date lastVisited){
       this.lastVisited = lastVisited;
     }
@@ -165,10 +154,6 @@ final class Waypoint implements Entity {
         !lastVisited.equals(waypoint.lastVisited) :
         waypoint.lastVisited != null)
         return false;
-        if (pythonMethodName != null ?
-        !pythonMethodName.equals(waypoint.pythonMethodName) :
-        waypoint.pythonMethodName != null)
-        return false;
         return name != null ? name.equals(waypoint.name) : waypoint.name == null;
 
     }
@@ -179,9 +164,6 @@ final class Waypoint implements Entity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (lastVisited != null ?
          lastVisited.hashCode() :
-         0);
-        result = 31 * result + (pythonMethodName != null ?
-        pythonMethodName.hashCode() :
          0);
         result = 31 * result + x;
         result = 31 * result + y;
@@ -197,7 +179,6 @@ final class Waypoint implements Entity {
                 ", x=" + x +
                 ", y=" + y +
                 ", lastVisited='" + lastVisited + '\'' +
-                ", pythonMethodName='" + pythonMethodName + '\'' +
                 '}';
     }
 }

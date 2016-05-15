@@ -203,17 +203,38 @@ public class ScheduleTest {
     }
 
     @Test
+    public void testEquals10(){
+      Task t1 = task();
+      Task t2 = task();
+      t2.setPythonMethodName(null);
+
+      assertThat(t1.equals(t2), is(false));
+    }
+
+    @Test
+    public void testEquals11(){
+      Task t1 = task();
+      t1.setPythonMethodName(null);
+      Task t2 = task();
+
+      assertThat(t1.equals(t2), is(false));
+    }
+
+    @Test
     public void testToString(){
       Task t1 = task();
+      t1.setPythonMethodName("my_task");
 
       String result = t1.toString();
       assertThat(result, containsString("Task"));
       assertThat(result, containsString("id="));
       assertThat(result, containsString("name="));
       assertThat(result, containsString("description="));
+      assertThat(result, containsString("pythonMethodName="));
       assertThat(result, containsString("cron="));
       assertThat(result, containsString(t1.getName()));
       assertThat(result, containsString(t1.getDescription()));
+      assertThat(result, containsString(t1.getPythonMethodName()));
       assertThat(result, containsString(t1.getCron()));
     }
 
