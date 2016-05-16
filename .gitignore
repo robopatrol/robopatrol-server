@@ -1,5 +1,5 @@
 # Database
-*.mapdb
+/store
 
 # Gradle
 .gradle

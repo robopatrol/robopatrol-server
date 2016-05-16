@@ -2,16 +2,16 @@ apply plugin: 'java'
 apply plugin: 'application'
 
 repositories {
-    mavenCentral()  // for release artifacts
-    maven {         // for snapshot artifacts
+    mavenCentral()
+    maven {
         url 'https://oss.sonatype.org/content/groups/public'
     }
 }
 
 dependencies {
-    compile 'org.glassfish.jersey.containers:jersey-container-jdk-http:2.22.2' // REST server
+    compile 'org.glassfish.jersey.containers:jersey-container-grizzly2-http:2.22.2' // REST server
     compile 'org.glassfish.jersey.media:jersey-media-moxy:2.22.2' // JSON for the REST server
-    compile 'org.mapdb:mapdb:3.0.0-M5' // Persistant storage
+    compile 'org.mapdb:mapdb:3.0.0-beta3' // Persistant storage
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-all:1.+'

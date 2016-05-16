@@ -24,7 +24,7 @@ public class ScheduleTest {
 
     @Before
     public void createSchedule() {
-        schedule = new Schedule(RobopatrolStore.inMemory());
+        schedule = new Schedule(RobopatrolStoreProvider.inMemory());
     }
 
     @Test

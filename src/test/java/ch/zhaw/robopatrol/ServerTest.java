@@ -1,9 +1,15 @@
 package ch.zhaw.robopatrol;
 
 import ch.zhaw.robopatrol.res.DummyResource;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 
+import javax.ws.rs.NotFoundException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
@@ -19,19 +25,31 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class ServerTest {
 
+    @BeforeClass
+    public static void startServer() throws IOException {
+        Main.main(new String[0]);
+        waitForServer(9998);
+    }
 
     @Test(timeout = 30000)
-    public void testMain() throws IOException {
-        //int port = findPort();
-        Main.main(new String[0]);
-        //Main.start(port);
-        waitForServer(9998);
-
-        URL testUrl = new URL("http://localhost:" + 9998 + "/" + DummyResource.PATH);
-        try (Scanner response = new Scanner(testUrl.openStream(),StandardCharsets.UTF_8.name())) {
+    public void test200() throws IOException {
+        try (Scanner response = new Scanner(url(DummyResource.PATH).openStream(), StandardCharsets.UTF_8.name())) {
             String line = response.useDelimiter("\\n").next();
             assertThat(line, is(DummyResource.CONTENT));
         }
+    }
+
+    @Test(timeout = 30000, expected = FileNotFoundException.class)
+    public void test404() throws IOException {
+        try{
+            new Scanner(url("somegarbagepath").openStream(), StandardCharsets.UTF_8.name());
+        } finally {
+            Main.stop();
+        }
+    }
+
+    @AfterClass
+    public static void stopServer() {
         Main.stop();
     }
 
@@ -41,6 +59,10 @@ public class ServerTest {
             Socket socket = new Socket("localhost", port);
             serverAvailable = socket.isConnected();
         } while (!serverAvailable);
+    }
+
+    private static URL url(String path) throws MalformedURLException {
+        return new URL("http://localhost:9998/" + path);
     }
 
 }
