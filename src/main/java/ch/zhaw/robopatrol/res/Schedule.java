@@ -88,7 +88,8 @@ final class Task implements Entity {
 
     private String id;
 
-    private String name;
+    /** Has to be an existing method in schedule.py */
+    private String name  = "do_Patrol";
 
     private String description;
 
@@ -105,8 +106,7 @@ final class Task implements Entity {
      */
     private String cron;
 
-    /** Has to be an existing method in schedule.py */
-    private String pythonMethodName = "do_Patrol";
+    private String displayName;
 
     public Task() { }
 
@@ -144,12 +144,12 @@ final class Task implements Entity {
         this.cron = cron;
     }
 
-    public void setPythonMethodName(String pythonMethodName){
-      this.pythonMethodName = pythonMethodName;
+    public void setDisplayName(String displayName){
+      this.displayName = displayName;
     }
 
-    public String getPythonMethodName(){
-      return pythonMethodName;
+    public String getDisplayName(){
+      return displayName;
     }
 
     /** Generated. */
@@ -161,14 +161,14 @@ final class Task implements Entity {
         return Objects.equals(id, task.id) &&
                 Objects.equals(name, task.name) &&
                 Objects.equals(description, task.description) &&
-                Objects.equals(pythonMethodName, task.pythonMethodName) &&
+                Objects.equals(displayName, task.displayName) &&
                 Objects.equals(cron, task.cron);
     }
 
     /** Generated. */
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description,  pythonMethodName, cron);
+        return Objects.hash(id, name, description,  displayName, cron);
     }
 
     /** Generated. */
@@ -178,7 +178,7 @@ final class Task implements Entity {
             "id='" + id + '\'' +
             ", name='" + name + '\'' +
             ", description='" + description + '\'' +
-            ", pythonMethodName='" + pythonMethodName + '\'' +
+            ", displayName='" + displayName + '\'' +
             ", cron=" + cron +
             '}';
     }

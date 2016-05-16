@@ -82,7 +82,6 @@ public class Route {
  *      "x": "234",
  *      "y": "25",
  *      "lastVisited": "2016-04-23T18:25:43.511Z"
- *      "pythonMethodName": "my_task"
  *  }
  * </code></pre>
  */

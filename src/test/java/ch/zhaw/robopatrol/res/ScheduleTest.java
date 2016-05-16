@@ -206,15 +206,15 @@ public class ScheduleTest {
     public void testEquals10(){
       Task t1 = task();
       Task t2 = task();
-      t2.setPythonMethodName(null);
+      t2.setDisplayName(null);
 
-      assertThat(t1.equals(t2), is(false));
+      assertThat(t1.equals(t2), is(true));
     }
 
     @Test
     public void testEquals11(){
       Task t1 = task();
-      t1.setPythonMethodName(null);
+      t1.setDisplayName("test");
       Task t2 = task();
 
       assertThat(t1.equals(t2), is(false));
@@ -223,18 +223,18 @@ public class ScheduleTest {
     @Test
     public void testToString(){
       Task t1 = task();
-      t1.setPythonMethodName("my_task");
+      t1.setDisplayName("my_task");
 
       String result = t1.toString();
       assertThat(result, containsString("Task"));
       assertThat(result, containsString("id="));
       assertThat(result, containsString("name="));
       assertThat(result, containsString("description="));
-      assertThat(result, containsString("pythonMethodName="));
+      assertThat(result, containsString("displayName="));
       assertThat(result, containsString("cron="));
       assertThat(result, containsString(t1.getName()));
       assertThat(result, containsString(t1.getDescription()));
-      assertThat(result, containsString(t1.getPythonMethodName()));
+      assertThat(result, containsString(t1.getDisplayName()));
       assertThat(result, containsString(t1.getCron()));
     }
 
