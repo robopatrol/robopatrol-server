@@ -234,8 +234,8 @@ public class RouteTest {
       assertThat(result, containsString("y="));
       assertThat(result, containsString("name="));
       assertThat(result, containsString(p1.getName()));
-      assertThat(result, containsString(Integer.toString(p1.getX())));
-      assertThat(result, containsString(Integer.toString(p1.getY())));
+      assertThat(result, containsString(Float.toString(p1.getX())));
+      assertThat(result, containsString(Float.toString(p1.getY())));
     }
 
     private Waypoint point() {

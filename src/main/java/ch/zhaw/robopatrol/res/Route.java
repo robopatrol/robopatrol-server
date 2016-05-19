@@ -90,9 +90,9 @@ final class Waypoint implements Entity {
 
     private String name;
 
-    private int x;
+    private float x;
 
-    private int y;
+    private float y;
 
     public Waypoint() { }
 
@@ -114,17 +114,17 @@ final class Waypoint implements Entity {
         this.name = name;
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public void setX(int x) { this.x = x; }
+    public void setX(float x) { this.x = x; }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(float y) {
         this.y = y;
     }
 
@@ -146,8 +146,8 @@ final class Waypoint implements Entity {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + x;
-        result = 31 * result + y;
+        result = 31 * result + (int) x;
+        result = 31 * result + (int) y;
         return result;
     }
 
