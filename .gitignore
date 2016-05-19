@@ -13,3 +13,4 @@ gradle-app.setting
 data/00000000000.xd
 *.lck
 *.xd
+/bin/

@@ -91,7 +91,7 @@ final class Task implements Entity {
     private String name;
 
     private String description;
-
+    
     /** Standard cron-style string:
      * <code><pre>
      * ┌───────────── min (0 - 59)
@@ -105,6 +105,10 @@ final class Task implements Entity {
      */
     private String cron;
 
+    private boolean takePhoto;
+    
+    private int takePhotoIntervalSec;
+    
     public Task() { }
 
     @Override
@@ -141,7 +145,23 @@ final class Task implements Entity {
         this.cron = cron;
     }
 
-    /** Generated. */
+    public boolean isTakePhoto() {
+		return takePhoto;
+	}
+
+	public void setTakePhoto(boolean takePhoto) {
+		this.takePhoto = takePhoto;
+	}
+
+	public int getTakePhotoIntervalSec() {
+		return takePhotoIntervalSec;
+	}
+
+	public void setTakePhotoIntervalSec(int takePhotoIntervalSec) {
+		this.takePhotoIntervalSec = takePhotoIntervalSec;
+	}
+
+	/** Generated. */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
