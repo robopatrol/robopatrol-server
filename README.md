@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/robopatrol/robopatrol-server.svg?branch=master)](https://travis-ci.org/robopatrol/robopatrol-server) [![codecov.io](https://codecov.io/github/robopatrol/robopatrol-server/coverage.svg?branch=master)](https://codecov.io/github/robopatrol/robopatrol-server?branch=master)
 
+Main project documentation: **[Project Wiki](https://github.com/robopatrol/robopatrol/wiki)**
+
 ## Develop
 
 ### Run the Application
