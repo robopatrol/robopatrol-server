@@ -91,6 +91,8 @@ final class Task implements Entity {
     private String name;
 
     private String description;
+
+    private boolean active;
     
     /** Standard cron-style string:
      * <code><pre>
@@ -159,6 +161,14 @@ final class Task implements Entity {
 
 	public void setTakePhotoIntervalSec(int takePhotoIntervalSec) {
 		this.takePhotoIntervalSec = takePhotoIntervalSec;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 
 	/** Generated. */
