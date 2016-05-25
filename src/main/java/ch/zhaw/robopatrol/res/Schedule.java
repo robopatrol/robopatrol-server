@@ -92,8 +92,6 @@ final class Task implements Entity {
 
     private String description;
 
-    private boolean active;
-    
     /** Standard cron-style string:
      * <code><pre>
      * ┌───────────── min (0 - 59)
@@ -110,6 +108,8 @@ final class Task implements Entity {
     private boolean takePhoto;
     
     private int takePhotoIntervalSec;
+    
+    private boolean active;
     
     public Task() { }
 
@@ -180,13 +180,16 @@ final class Task implements Entity {
         return Objects.equals(id, task.id) &&
                 Objects.equals(name, task.name) &&
                 Objects.equals(description, task.description) &&
-                Objects.equals(cron, task.cron);
+                Objects.equals(cron, task.cron) &&
+                Objects.equals(takePhoto,  task.takePhoto) &&
+                Objects.equals(takePhotoIntervalSec, task.takePhotoIntervalSec) &&
+                Objects.equals(active, task.active);
     }
 
     /** Generated. */
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, cron);
+        return Objects.hash(id, name, description, cron, takePhoto, takePhotoIntervalSec);
     }
 
     /** Generated. */
@@ -196,7 +199,10 @@ final class Task implements Entity {
             "id='" + id + '\'' +
             ", name='" + name + '\'' +
             ", description='" + description + '\'' +
-            ", cron=" + cron +
+            ", cron=" + cron + '\'' +
+            ", takePhoto='" + takePhoto + '\'' +
+            ", takePhotoIntervalSec='" + takePhotoIntervalSec + '\'' + 
+            ", active='" + active + '\'' +
             '}';
     }
 }

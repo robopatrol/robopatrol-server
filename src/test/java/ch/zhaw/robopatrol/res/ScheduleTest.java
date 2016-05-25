@@ -158,16 +158,46 @@ public class ScheduleTest {
 
       assertThat(t1.equals(t2), is(true));
     }
-
+    
     @Test
     public void testEquals5(){
+      Task t1 = task();
+      t1.setTakePhoto(true);
+      Task t2 = task();
+      t2.setTakePhoto(true);
+
+      assertThat(t1.equals(t2), is(true));
+    }
+    
+    @Test
+    public void testEquals6(){
+      Task t1 = task();
+      t1.setTakePhotoIntervalSec(42);
+      Task t2 = task();
+      t2.setTakePhotoIntervalSec(42);
+
+      assertThat(t1.equals(t2), is(true));
+    }
+    
+    @Test
+    public void testEquals7(){
+      Task t1 = task();
+      t1.setActive(true);
+      Task t2 = task();
+      t2.setActive(true);
+
+      assertThat(t1.equals(t2), is(true));
+    }
+
+    @Test
+    public void testEquals8(){
       Task t1 = task();
 
       assertThat(t1.equals(t1), is(true));
     }
 
     @Test
-    public void testEquals6(){
+    public void testEquals9(){
       Task t1 = task();
       t1.setId("foo");
       Task t2 = task();
@@ -176,7 +206,7 @@ public class ScheduleTest {
     }
 
     @Test
-    public void testEquals7(){
+    public void testEquals10(){
       Task t1 = task();
       t1.setCron("something");
       Task t2 = task();
@@ -185,7 +215,7 @@ public class ScheduleTest {
     }
 
     @Test
-    public void testEquals8(){
+    public void testEquals11(){
       Task t1 = task();
       t1.setDescription("foo");
       Task t2 = task();
@@ -194,9 +224,36 @@ public class ScheduleTest {
     }
 
     @Test
-    public void testEquals9(){
+    public void testEquals12(){
       Task t1 = task();
       t1.setName("foo");
+      Task t2 = task();
+
+      assertThat(t1.equals(t2), is(false));
+    }
+    
+    @Test
+    public void testEquals13(){
+      Task t1 = task();
+      t1.setTakePhoto(true);
+      Task t2 = task();
+
+      assertThat(t1.equals(t2), is(false));
+    }
+    
+    @Test
+    public void testEquals14(){
+      Task t1 = task();
+      t1.setTakePhotoIntervalSec(42);
+      Task t2 = task();
+
+      assertThat(t1.equals(t2), is(false));
+    }
+    
+    @Test
+    public void testEquals15(){
+      Task t1 = task();
+      t1.setActive(true);
       Task t2 = task();
 
       assertThat(t1.equals(t2), is(false));
