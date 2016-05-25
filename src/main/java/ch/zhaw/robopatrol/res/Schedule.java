@@ -108,6 +108,12 @@ final class Task implements Entity {
 
     private String displayName;
 
+    private boolean takePhoto;
+    
+    private int takePhotoIntervalSec;
+    
+    private boolean active;
+    
     public Task() { }
 
     @Override
@@ -153,6 +159,31 @@ final class Task implements Entity {
     }
 
     /** Generated. */
+    public boolean isTakePhoto() {
+		return takePhoto;
+	}
+
+	public void setTakePhoto(boolean takePhoto) {
+		this.takePhoto = takePhoto;
+	}
+
+	public int getTakePhotoIntervalSec() {
+		return takePhotoIntervalSec;
+	}
+
+	public void setTakePhotoIntervalSec(int takePhotoIntervalSec) {
+		this.takePhotoIntervalSec = takePhotoIntervalSec;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	/** Generated. */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -162,13 +193,16 @@ final class Task implements Entity {
                 Objects.equals(name, task.name) &&
                 Objects.equals(description, task.description) &&
                 Objects.equals(displayName, task.displayName) &&
-                Objects.equals(cron, task.cron);
+                Objects.equals(cron, task.cron) &&
+                Objects.equals(takePhoto,  task.takePhoto) &&
+                Objects.equals(takePhotoIntervalSec, task.takePhotoIntervalSec) &&
+                Objects.equals(active, task.active);
     }
 
     /** Generated. */
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description,  displayName, cron);
+        return Objects.hash(id, name, description, cron, displayName, takePhoto, takePhotoIntervalSec);
     }
 
     /** Generated. */
@@ -179,7 +213,10 @@ final class Task implements Entity {
             ", name='" + name + '\'' +
             ", description='" + description + '\'' +
             ", displayName='" + displayName + '\'' +
-            ", cron=" + cron +
+            ", cron=" + cron + '\'' +
+            ", takePhoto='" + takePhoto + '\'' +
+            ", takePhotoIntervalSec='" + takePhotoIntervalSec + '\'' + 
+            ", active='" + active + '\'' +
             '}';
     }
 }
